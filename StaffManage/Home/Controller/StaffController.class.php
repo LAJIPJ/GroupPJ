@@ -9,6 +9,7 @@ class StaffController extends Controller{
     }
 
     private function detail() {
+        $this->userInfo = 
         $this->display('detail');
     }
 }
