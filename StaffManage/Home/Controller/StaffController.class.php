@@ -5,10 +5,11 @@ use Think\Controller;
 
 class StaffController extends Controller{
     public function index() {
-        $this->overview();
+        $this->detail();
     }
 
-    private function overview() {
-        $this->display('Overview');
+    private function detail() {
+        $this->userInfo = 
+        $this->display('detail');
     }
 }
