@@ -16,6 +16,10 @@ $(document).ready(function() {
         $('#info_form :input').val("")
     }
 
+    if (shouldDisable) {
+        $('#info_form :input').attr('disabled', true)
+    }
+
     $("#submitButton").click(function (event) {
         event.preventDefault()
         var $inputs = $('#info_form :input');
@@ -47,5 +51,6 @@ $(document).ready(function() {
                 }
             })
         }
+
     })
 });

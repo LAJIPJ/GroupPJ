@@ -5,7 +5,8 @@ use Home\Model\Staff\StaffModel;
 
 class StaffController extends Controller{
     public function index() {
-        $this->edit();
+        $this->displayView('true');
+        $this->shouldDisable = false;
     }
 
     public function addAction() {
@@ -25,12 +26,13 @@ class StaffController extends Controller{
     }
 
     private function displayView($isEditing) {
-//        $staffModel = new StaffModel();
+        $staffModel = new StaffModel();
 
         if ($isEditing == 'true') {
-            $this->userInfo = array("Name" => 'Nick', "Tel" => 13270808162, "EmergCont" => "WTF",
-            "PriSector" => "APP部", "ScdSector" => "iOS组", "Post" => "搬瓦工", "Level" => "level1",
-            "Address" => "NJU", "ManagerID" => "9527", "JoinDate" => '2016-07-04');
+            $this->userInfo = $staffModel->getByID("000001");
+            if ($this->userInfo == NULL) {
+                $this->error("该员工不存在".$staffModel->getByID("000001"));
+            }
         } else {
             $this->userInfo = array();
         }
@@ -43,12 +45,15 @@ class StaffController extends Controller{
     }
 
     public function edit() {
+        $staffModel = new StaffModel();
 //        $this->error("该用户不存在");
         $this->staffId = $_REQUEST["staffId"];
+        $this->shouldDisable = 'false';
         $this->displayView('true');
     }
 
     public function add() {
+        $this->shouldDisable = 'false';
         $this->displayView('false');
     }
 }
