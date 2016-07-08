@@ -5,7 +5,7 @@
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
       <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
     </head>
 
     <body>
@@ -20,14 +20,14 @@
         <form class="col s12">
           <div class="row">
             <div class="input-field col s6 offset-s3">
-              <input id="name" type="text" class="validate">
-              <label for="name">Name</label>
+              <input id="name" type="text" class="validate" required name="name">
+              <label for="name" data-error="用户名不能为空">Name</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6 offset-s3">
-              <input id="password" type="password" class="validate">
-              <label for="password">Password</label>
+              <input id="password" type="password" name="password" pattern="[\w]{6,16}" class="validate">
+              <label for="password" data-error="密码由字母、数字、下划线组成, 长度为6 ~ 16位">Password</label>
             </div>
           </div>
           <div class="row">
