@@ -7,7 +7,7 @@
     <body>
         <nav>
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo">
+                <a href="{:U('Staff/overview')}" class="brand-logo">
                     员工管理
                 </a>
 
@@ -106,7 +106,7 @@
                         </div>
                         <div class="input-field col offset-s8 s2">
                             <button id="submitButton" class="btn waves-effect waves-light" type="submit">
-                                <if condition="$isEditing">
+                                <if condition="$isEditing eq 'true'">
                                     确认修改
                                     <else />
                                     确认增加
@@ -124,6 +124,8 @@
         var joinDate = "{$userInfo['JoinDate']}";
         var isEditing = {$isEditing};
         var addEndPoint = "{:U('Staff/addAction')}"
+        var editEndPoint = "{:U('Staff/editAction')}"
+        var staffId = "{$staffId}"
     </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
     <!-- Compiled and minified JavaScript -->

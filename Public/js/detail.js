@@ -29,7 +29,14 @@ $(document).ready(function() {
 
         console.log(values);
         if (isEditing) {
-
+            values["staffId"] = staffId
+            $.post(editEndPoint, values, function (data) {
+                if (data) {
+                    alert("修改成功!")
+                } else {
+                    alert("修改失败!")
+                }
+            })
         } else {
             $.post(addEndPoint, values, function (data) {
                 if (data) {
