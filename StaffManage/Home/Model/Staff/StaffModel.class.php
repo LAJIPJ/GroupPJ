@@ -24,7 +24,7 @@
     Authority CHAR(1) DEFAULT '3'
     );
     */
-namespace Home\Model;
+namespace Home\Model\Staff;
 use Think\Model;
 class StaffModel extends Model {
     private $staff;
@@ -43,7 +43,7 @@ class StaffModel extends Model {
     }
 
     //返回密码或false（查找失败）
-    public function GetPassword($ID) {
+    public function getPassword($ID) {
         if(!$staff) {
             alert('连接数据库失败，请检查网络。');
             return false;
@@ -56,7 +56,7 @@ class StaffModel extends Model {
         }
     }
 
-    public function SetPassword($ID, $Password) {
+    public function setPassword($ID, $Password) {
         if(!$staff) {
             alert('连接数据库失败，请检查网络。');
             return false;
@@ -82,7 +82,7 @@ class StaffModel extends Model {
 
     //传入 一级部门，二级部门，姓名
     //若一级部门空缺，则忽略二级部门
-    public function GetInfo($Name, $PriSector, $ScdSector, $start, $end) {
+    public function getInfo($Name, $PriSector, $ScdSector, $start, $end) {
         if(!$staff) {
             alert('连接数据库失败，请检查网络。');
             return false;
@@ -100,18 +100,18 @@ class StaffModel extends Model {
 
     //检查权限
     //Controller?
-    public function CheckAuthority() {
+    public function checkAuthority() {
 
     }
 
     //ID,JoinDate，Authority自动生成
     //返回ID或false（插入失败）
-    public function AddStaff($NewStaff) {
+    public function addStaff($NewStaff) {
         if(!$staff) {
             alert('连接数据库失败，请检查网络。');
             return false;
         }
-        if(CheckInput($NewStaff) === false) {
+        if(checkInput($NewStaff) === false) {
             return false;
         }
         //自动生成ID
@@ -132,7 +132,7 @@ class StaffModel extends Model {
         }
     }
 
-    public function DelStaff($ID) {
+    public function delStaff($ID) {
         if(!$staff) {
             alert('连接数据库失败，请检查网络。');
             return false;
@@ -147,12 +147,12 @@ class StaffModel extends Model {
 
     //不允许修改ID,Password,JoinDate,DeleteDate,Authority
     //返回ID或false(如果修改不成功)
-    public function Update($ID, $NewStaff) {
+    public function update($ID, $NewStaff) {
         if(!$staff) {
             alert('连接数据库失败，请检查网络。');
             return false;
         }
-        if(CheckInput($NewStaff) === false) {
+        if(checkInput($NewStaff) === false) {
             return false;
         }
         $result = $staff->query("update staff set ID='{$ID}',Name='{$NewStaff['Name']}',Tel='{$NewStaff['Tel']}',EmergCont='{$NewStaff['EmergCont']}',PriSector='{$NewStaff['PriSector']}',ScdSector='{$NewStaff['ScdSector']}',Post='{$NewStaff['Post']}',Level='{$NewStaff['Level']}',Address='{$NewStaff['Address']}',ManagerID='{$NewStaff['ManagerID']}' where ID ='{$ID}'");
@@ -163,7 +163,7 @@ class StaffModel extends Model {
         }
     }
 
-    private function CheckInput($NewStaff) {
+    private function checkInput($NewStaff) {
         if(array_key_exists('Name', $NewStaff)) {
             if($NewStaff['Name'] === '' || strlen($NewStaff['Name']) > 40)
                 return false;
