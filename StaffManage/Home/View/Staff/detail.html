@@ -5,33 +5,44 @@
         <link href="__PUBLIC__/css/detail.css" rel="stylesheet">
     </head>
     <body>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">
+                    员工管理
+                </a>
+
+            </div>
+        </nav>
         <div class="container">
             <div class="info-box">
-                <form class="col s12" action="index.php" onsubmit="return validateForm()">
-                    <input type="hidden" name="isReading" value="true" />
+                <form id="info_form" class="col s12" action="index.php" onsubmit="return validateForm()">
                     <div class="row">
                         <div class="input-field col s4 offset-s2">
                             <i class="material-icons prefix">account_circle</i>
-                            <input id="name" displayVal="{$_REQUEST['userName']}" type="text" class="validate" name="userName" required>
+                            <input id="name" value="{$userInfo['Name']}" type="text" class="validate" name="userName" required>
                             <label for="name" data-error="用户名不能为空">姓名</label>
                         </div>
                         <div class="input-field col s4">
                             <i class="material-icons prefix">local_phone</i>
-                            <input id="phone" name="phone" displayVal="{$_REQUEST['phone']}" type="text" pattern="\d{11}" class="validate">
+                            <input id="phone" name="phone" value="{$userInfo['Tel']}" type="text" pattern="\d{11}" class="validate">
                             <label for="phone" data-error="手机格式不规范">手机</label>
                         </div>
                         <div class="input-field col s8 offset-s2">
                             <i class="material-icons prefix">add_alert</i>
-                            <input id="emergency_contact" name="emergency_contact" type="text" displayVal="{$_REQUEST['name']}" class="validate" required>
+                            <input id="emergency_contact" name="emergency_contact" type="text" value="{$userInfo['EmergCont']}" class="validate" required>
                             <label for="emergency_contact">紧急联络人</label>
                         </div>
                         <div class="input-field col s4 offset-s2">
                             <i class="material-icons prefix">looks_one</i>
                             <select>
                                 <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                                <foreach name="priSectors" item="priSector" >
+                                    <if condition="$priSector eq $userInfo['PriSector']">
+                                        <option value="{$priSector}" selected>{$priSector}</option>
+                                        <else />
+                                        <option value="{$priSector}">{$priSector}</option>
+                                    </if>
+                                </foreach>
                             </select>
                             <label>一级部门</label>
                         </div>
@@ -40,19 +51,27 @@
                             <i class="material-icons prefix">looks_two</i>
                             <select>
                                 <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                                <foreach name="scdSectors" item="scdSector" >
+                                    <if condition="$scdSector eq $userInfo['ScdSector']">
+                                        <option value="{$scdSector}" selected>{$scdSector}</option>
+                                        <else />
+                                        <option value="{$scdSector}">{$scdSector}</option>
+                                    </if>
+                                </foreach>
                             </select>
                             <label>二级部门</label>
                         </div>
                         <div class="input-field col s4 offset-s2">
                             <i class="material-icons prefix">assignment_ind</i>
-                            <select>
+                            <select name="post">
                                 <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                                <foreach name="posts" item="post" >
+                                    <if condition="$post eq $userInfo['Post']">
+                                        <option value="{$post}" selected>{$post}</option>
+                                        <else />
+                                        <option value="{$post}">{$post}</option>
+                                    </if>
+                                </foreach>
                             </select>
                             <label>岗位名称</label>
                         </div>
@@ -60,17 +79,20 @@
                             <i class="material-icons prefix">book_mark</i>
                             <select>
                                 <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                                <foreach name="levels" item="level" >
+                                    <if condition="$level eq $userInfo['Level']">
+                                        <option value="{$level}" selected>{$level}</option>
+                                        <else />
+                                        <option value="{$level}">{$level}</option>
+                                    </if>
+                                </foreach>
                             </select>
                             <label>职位级别</label>
                         </div>
 
                         <div class="input-field col s4 offset-s2">
                             <i class="material-icons prefix">home</i>
-                            <input id="address" name="address"  type="text" pattern="\d{8}|\d{11}" displayVal="{$_REQUEST['tel']}" class="validate" data-error="电话格式不符合要求">
-                            <label for="address" data-error="电话格式不符合要求">住址</label>
+                            <input id="address" name="address"  type="text" pattern="\d{8}|\d{11}" value="{$userInfo['Address']}" class="validate" data-error="电话格式不符合要求">
                         </div>
                         <div class="input-field col s4">
                             <i class="material-icons prefix">group_add</i>
@@ -79,11 +101,16 @@
                         </div>
                         <div class="input-field col s4 offset-s2">
                             <i class="material-icons prefix">person</i>
-                            <input id="managerId" name="managerId" displayVal="{$_REQUEST['password']}" type="password" pattern="[\w]{6,16}" class="validate">
-                            <label for="managerId" data-error="密码由字母、数字、下划线组成, 长度为6 ~ 16位">直属经理工号</label>
+                            <input id="managerId" name="managerId" value="{$userInfo['Tel']}" type="text" pattern="[\w]{6,16}" class="validate" required>
+                            <label for="managerId">直属经理工号</label>
                         </div>
                         <div class="input-field col offset-s8 s2">
-                            <button class="btn waves-effect waves-light" type="submit" name="action">确认
+                            <button id="submitButton" class="btn waves-effect waves-light" type="submit">
+                                <if condition="$isEditing">
+                                    确认修改
+                                    <else />
+                                    确认增加
+                                </if>
                                 <i class="material-icons right">send</i>
                             </button>
                         </div>
@@ -93,8 +120,13 @@
         </div>
 
     </body>
+    <script>
+        var joinDate = "{$userInfo['JoinDate']}";
+        var isEditing = {$isEditing};
+        var addEndPoint = "{:U('Staff/addAction')}"
+    </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/detail.js"></script>
+    <import type='js' file="js.detail" />
 </html>
