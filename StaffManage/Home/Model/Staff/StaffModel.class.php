@@ -24,7 +24,7 @@
     Authority CHAR(1) DEFAULT '3'
     );
     */
-namespace Home\Model;
+namespace Home\Model\Staff;
 use Think\Model;
 class StaffModel extends Model {
     private $staff;

@@ -20,8 +20,8 @@
         <form class="col s12">
           <div class="row">
             <div class="input-field col s6 offset-s3">
-              <input id="name" type="text" class="validate" required name="name">
-              <label for="name" data-error="用户名不能为空">Name</label>
+              <input id="ID" type="text" class="validate" required name="ID">
+              <label for="ID" data-error="ID不能为空">ID</label>
             </div>
           </div>
           <div class="row">
@@ -30,15 +30,16 @@
               <label for="password" data-error="密码由字母、数字、下划线组成, 长度为6 ~ 16位">Password</label>
             </div>
           </div>
-          <div class="row">
+          
+          
+        </form>
+        <div class="row">
             <div class="input-field col s4 offset-s4">
-              <button class="btn waves-effect waves-light btn-large" type="submit" name="action">Submit
+              <button id="login-btn" class="btn waves-effect waves-light btn-large" name="action">Submit
                 <i class="material-icons right">send</i>
               </button>
             </div>
           </div>
-          
-        </form>
       </div>
 
 
@@ -48,5 +49,27 @@
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
       <!-- Compiled and minified JavaScript -->
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+      <script>
+        var btn = document.getElementById("login-btn");
+        btn.onclick = function(){
+            var ID = $("#ID").val();
+            var password = $("#password").val();
+            console.log('click'+ID+password);
+            $.post(
+                    "http://localhost/GroupPJ/StaffManage/index.php/Home/Login/login",
+                    {
+                      ID:ID,
+                      password:password
+                    },
+                    function(data){
+                        if(data){
+                            //window.location.href="http://localhost/GroupPJ/StaffManage/Home/View/Staff/Search.html";
+                        }else{
+                            alert("ID或密码错误！");
+                        }
+                    }
+            );
+        }
+      </script>
     </body>
   </html>
