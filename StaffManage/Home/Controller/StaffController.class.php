@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use Home\Model\Staff\StaffModel;
 
 class StaffController extends Controller{
     public function index() {
@@ -8,7 +9,8 @@ class StaffController extends Controller{
     }
 
     public function addAction() {
-        $this->ajaxReturn($_REQUEST);
+        $staffModel = new StaffModel();
+        $this->ajaxReturn($staffModel ->addStaff($_REQUEST));
     }
 
     public function edit() {
@@ -29,6 +31,7 @@ class StaffController extends Controller{
         $this->scdSectors = array("team1", "team2", "iOS组", "Android组");
         $this->posts = array("搬瓦工", "岗位1");
         $this->isEditing = 'false';
+
         $this->display('detail');
     }
 }

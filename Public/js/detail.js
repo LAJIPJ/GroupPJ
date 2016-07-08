@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     console.log(isEditing)
     if (!isEditing) {
-        // $('#info_form :input').val("")
+        $('#info_form :input').val("")
     }
 
     $("#submitButton").click(function (event) {
@@ -32,7 +32,12 @@ $(document).ready(function() {
 
         } else {
             $.post(addEndPoint, values, function (data) {
-                console.log(data);
+                if (data) {
+                    alert("添加成功!")
+                    $('#info_form :input').val("")
+                } else {
+                    alert("添加失败!")
+                }
             })
         }
     })
