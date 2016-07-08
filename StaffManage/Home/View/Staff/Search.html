@@ -15,37 +15,38 @@
         </div>
     </nav>
     <div class="row">
-  	<a class='dropdown-button btn col s6' href='#' data-activates='dropdown1'>Drop Me!</a>
+  	<a class='dropdown-button btn col s6' id="first-Dpmt" data-activates='dropdown1'>一级部门</a>
 
   	<!-- Dropdown Structure -->
   	<ul id='dropdown1' class='dropdown-content'>
-    	<li><a href="#!">one</a></li>
+    	<li><a onclick="setDptm(0,0)">department1</a></li>
     	<li class="divider"></li>
-    	<li><a href="#!">two</a></li>
+    	<li><a onclick="setDptm(0,1)">department2</a></li>
     	<li class="divider"></li>
-    	<li><a href="#!">three</a></li>
+    	<li><a onclick="setDptm(0,2)">APP部</a></li>
   	</ul>
 
-	<a class='dropdown-button btn col s6' href='#' data-activates='dropdown2'>Drop Me!</a>
+	<a class='dropdown-button btn col s6' id="second-Dpmt" data-activates='dropdown2'>二级部门</a>
 
   	<!-- Dropdown Structure -->
   	<ul id='dropdown2' class='dropdown-content'>
-    	<li><a href="#!">4</a></li>
+    	<li><a onclick="setDptm(1,0)">team1</a></li>
     	<li class="divider"></li>
-    	<li><a href="#!">5</a></li>
+    	<li><a onclick="setDptm(1,1)">team2</a></li>
     	<li class="divider"></li>
-    	<li><a href="#!">6</a></li>
+    	<li><a onclick="setDptm(1,2)">iOS组</a></li>
+      <li class="divider"></li>
+      <li><a onclick="setDptm(1,3)">Android组</a></li>
   	</ul>
   	</div>
 
   	<div class="row">
 		<div class="input-field col s10">
 		    <i class="material-icons prefix">search</i>
-		    <input id="icon_prefix" type="text" class="validate">
-		    <label for="icon_prefix">员工姓名</label>
+		    <input id="search-name" type="text" class="validate">
+		    <label for="search-name">员工姓名</label>
 		</div>
-		<a class="waves-effect waves-light btn col s2">查找</a>
-	</div>
+		<a id="search-btn" class="waves-effect waves-light btn col s2" >查找</a>
 	<div>
 		<table class="striped">
         <thead>
@@ -59,15 +60,19 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody id="list">
+        
           <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
+          
+            <td><a href="http://localhost/GroupPJ/StaffManage/Home/View/Staff/detail.html">Alex</a></td>
+            <td>12345678912</td>
+            <td>department1</td>
+            <td>team1</td>
+            <td>Front-end</td>
+            <td>Engineer</td>
           </tr>
+        
+          
           <tr>
             <td>Alan</td>
             <td>Jellybean</td>
@@ -92,5 +97,57 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    <script>
+      var btn = document.getElementById("search-btn");
+      var dpmt = [["department1","department2","APP部"],["team1","team2","iOS组","Android组"]]
+      var firstDpmt = "";
+      var secondDpmt = "";
+      function setDptm(index, order){
+        //console.log(firstDpmt[index]);
+        if(!index){
+          firstDpmt = dpmt[index][order];
+          $("#first-Dpmt").text(dpmt[index][order]);
+        }
+        else{
+          secondDpmt = dpmt[index][order];
+          $("#second-Dpmt").text(dpmt[index][order]);
+        }
+        
+      }
+      btn.onclick = function(){
+        var name = $("#search-name").val();
+        console.log(name);
+        $.post(
+                    "http://localhost/GroupPJ/StaffManage/index.php/Home/Search/search",
+                    {
+                      Name:name,
+                      PriSector:firstDpmt,
+                      ScdSector:secondDpmt
+                    },
+                    function(data){
+                        if(data){
+                          console.log(data);
+                          var listTable = document.getElementById("list");
+                          var content = "";
+                          for(item in data){
+                            content += "<tr><td>"+item["Name"]+
+                              "</td><td>"+item["Tel"]+
+                              "</td><td>"+item["PriSector"]+
+                              "</td><td>"+item["ScdSector"]+
+                              "</td><td>"+item["Post"]+
+                              "</td><td>"+item["Level"]+
+                              "</td></tr>"
+                          }
+                          listTable.innerHTML = content;
+                        }else{
+                            alert("找不到相关数据");
+                        }
+                    }
+            );
+
+      }
+
+
+    </script>
 </body>
 </html>
